@@ -8,7 +8,7 @@ class Project(models.Model):
   header_image = models.ImageField(blank=True, default='no-img.gif')
   short = models.TextField(blank=False)
   text = models.TextField(blank=False)
-  technologies = models.TextField(blank=True)
+  technologies = models.CharField(max_length=512, blank=True)
   date = models.DateField(default=timezone.now)
   created_at=models.DateTimeField(auto_now_add=True)
   updated_at=models.DateTimeField(auto_now=True)

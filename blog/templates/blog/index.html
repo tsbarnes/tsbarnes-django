@@ -1,22 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% if article_list %}
-    <div class="list-group p-2">
+  <div class="m-2">
+    {% if article_list %}
       {% for article in article_list %}
-        <a class="list-group-item list-group-item-action flex-column align-items-start" href="/blog/{{ article.slug }}/">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{ article.title }}</h5>
-            <small>{{ article.date }}</small>
+        <div class="col-md-4">
+        <div class="card">
+          {% if article.header_image %}
+            <img class="card-img" src="{{ article.header_image.url }}">
+          {% endif %}
+          <div class="card-body">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="card-title">{{ article.title }}</h5>
+              <small>{{ article.date }}</small>
+            </div>
+            <p class="card-text">
+              {{ article.short|safe }}
+            </p>
+            <a class="btn btn-primary" href="/blog/{{ article.slug }}/">Read more...</a>
           </div>
-          <p>
-            <i>{{ article.short }}</i>
-          </p>
-          <small>Read more...</small>
-        </a>
+        </div>
+        </div>
       {% endfor %}
-    </div>
-  {% else %}
-    <p>No articles are available.</p>
-  {% endif %}
+    {% else %}
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">No articles are available.</p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}

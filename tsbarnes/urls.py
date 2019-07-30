@@ -25,6 +25,7 @@ urlpatterns = [
   path('resume/', include('resume.urls')),
   path('portfolio/', include('portfolio.urls')),
   path('admin/', admin.site.urls),
+  path('tinymce/', include('tinymce.urls')),
 ]
 
 if settings.DEBUG:

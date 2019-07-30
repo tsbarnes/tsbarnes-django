@@ -11,7 +11,7 @@
         <small>{{ article.date }}</small>
       </div>
       <h5 class="card-subtitle mb-2 text-muted">{{ article.subtitle }}</h5>
-      <p>{{ article.text }}</h1>
+      <p>{{ article.text|safe }}</h1>
     </div>
   </div>
 {% endblock %}
