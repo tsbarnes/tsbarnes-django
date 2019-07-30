@@ -1,11 +1,11 @@
 from django.db import models
 from django.utils import timezone
 
-class PortfolioItem(models.Model):
+class Project(models.Model):
   slug = models.SlugField(blank=False)
   title = models.CharField(max_length=255, blank=False)
   subtitle = models.CharField(max_length=255, blank=True)
-  header_image = models.ImageField(blank=True)
+  header_image = models.ImageField(blank=True, default='no-img.gif')
   short = models.TextField(blank=False)
   text = models.TextField(blank=False)
   technologies = models.TextField(blank=True)

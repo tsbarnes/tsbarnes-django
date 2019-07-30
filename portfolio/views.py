@@ -3,13 +3,13 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 
-from .models import PortfolioItem
+from .models import Project
 
 
 class IndexView(generic.ListView):
-    model = PortfolioItem
+    model = Project
     template_name = 'portfolio/index.html'
 
 class DetailView(generic.DetailView):
-    model = PortfolioItem
+    model = Project
     template_name = 'portfolio/detail.html'
