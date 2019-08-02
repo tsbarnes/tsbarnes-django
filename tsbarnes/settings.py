@@ -23,9 +23,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ps6&s9@ittqkjm!rln*2@6_f2$_+n^)*ph-$^-51i$=q$)*9s6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+try:
+  from .local_settings import DEBUG
+except:
+  DEBUG = True
 
-ALLOWED_HOSTS = []
+
+try:
+  from .local_settings import ALLOWED_HOSTS
+except:
+  ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -141,10 +148,5 @@ COMPRESS_ROOT = os.path.join(BASE_DIR, 'static', 'min')
 
 COMPRESS_PRECOMPILERS = (
     ('text/sass', 'sass {infile} {outfile}'),
-    ('text/scss', 'scss {infile} {outfile}'),
+    ('text/scss', 'sass {infile} {outfile}'),
 )
-
-try:
-  from .local_settings import ALLOWED_HOSTS
-except:
-  pass
