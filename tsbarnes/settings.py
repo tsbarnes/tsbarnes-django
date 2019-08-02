@@ -167,6 +167,11 @@ except:
     ('text/scss', 'sass {infile} {outfile}'),
   )
 
+COMPRESS_CSS_FILTERS = (
+  'compressor.filters.css_default.CssAbsoluteFilter',
+  'compressor.filters.cssmin.CSSMinFilter',
+)
+
 try:
   from .local_settings import COMPRESS_OFFLINE
 except:
