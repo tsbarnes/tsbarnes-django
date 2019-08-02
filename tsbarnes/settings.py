@@ -142,3 +142,8 @@ COMPRESS_PRECOMPILERS = (
     ('text/sass', 'sass {infile} {outfile}'),
     ('text/scss', 'scss {infile} {outfile}'),
 )
+
+try:
+  from .local_settings import ALLOWED_HOSTS
+except:
+  pass
