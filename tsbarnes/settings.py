@@ -141,12 +141,26 @@ STATICFILES_FINDERS = (
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-COMPRESS_ROOT = os.path.join(BASE_DIR, 'static', 'min')
+try:
+  from .local_settings import STATIC_ROOT
+except:
+  pass
 
-COMPRESS_PRECOMPILERS = (
+MEDIA_URL = '/media/'
+try:
+  from .local_settings import MEDIA_ROOT
+except:
+  MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+try:
+  from .local_settings import COMPRESS_ROOT
+except:
+  COMPRESS_ROOT = os.path.join(BASE_DIR, 'static', 'min')
+
+try:
+  from .local_settings import COMPRESS_PRECOMPILERS
+except:
+  COMPRESS_PRECOMPILERS = (
     ('text/sass', 'sass {infile} {outfile}'),
     ('text/scss', 'sass {infile} {outfile}'),
-)
+  )
