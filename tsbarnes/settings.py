@@ -157,7 +157,7 @@ COMPRESS_ENABLED = True
 try:
   from .local_settings import COMPRESS_ROOT
 except:
-  COMPRESS_ROOT = os.path.join(BASE_DIR, 'static', 'min')
+  COMPRESS_ROOT = STATIC_ROOT
 
 try:
   from .local_settings import COMPRESS_PRECOMPILERS
