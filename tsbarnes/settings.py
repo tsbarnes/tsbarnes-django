@@ -152,6 +152,8 @@ try:
 except:
   MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+COMPRESS_ENABLED = True
+
 try:
   from .local_settings import COMPRESS_ROOT
 except:
