@@ -164,3 +164,8 @@ except:
     ('text/sass', 'sass {infile} {outfile}'),
     ('text/scss', 'sass {infile} {outfile}'),
   )
+
+try:
+  from .local_settings import COMPRESS_OFFLINE
+except:
+  pass
