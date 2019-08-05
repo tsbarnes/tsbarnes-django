@@ -25,6 +25,9 @@ class Overview(SingletonModel):
         verbose_name_plural = "Overview"
     def __unicode__(self):
         return self.text[0:40] + '...'
+    
+    def __str__(self):
+        return self.__unicode__()
 
 class PersonalInfo(SingletonModel):
     first_name = models.CharField(max_length=255)
@@ -43,6 +46,9 @@ class PersonalInfo(SingletonModel):
     
     def __unicode__(self):
         return self.full_name()
+    
+    def __str__(self):
+        return self.__unicode__()
 
 class Education(models.Model):
     name = models.CharField(max_length=250)
@@ -81,6 +87,9 @@ class Education(models.Model):
 
     def __unicode__(self):
         return ' '.join([self.name, self.edu_date_range()])
+    
+    def __str__(self):
+        return self.__unicode__()
 
 
 class Job(models.Model):
@@ -124,6 +133,9 @@ class Job(models.Model):
 
     def __unicode__(self):
         return ' '.join([self.company, self.job_date_range()])
+    
+    def __str__(self):
+        return self.__unicode__()
 
 class Accomplishment(SortableMixin):
     description = models.TextField()
@@ -137,6 +149,9 @@ class Accomplishment(SortableMixin):
 
     def __unicode__(self):
         return ''.join([self.job.company, '-', self.description[0:50], '...'])
+    
+    def __str__(self):
+        return self.__unicode__()
 
 class Skillset(SortableMixin):
     name = models.CharField(max_length=250)
@@ -147,6 +162,9 @@ class Skillset(SortableMixin):
 
     def __unicode__(self):
         return self.name
+    
+    def __str__(self):
+        return self.__unicode__()
 
 class Skill(SortableMixin):
     name =  models.CharField(max_length=250)
@@ -159,3 +177,6 @@ class Skill(SortableMixin):
 
     def __unicode__(self):
         return ''.join([self.skillset.name, '-', self.name])
+    
+    def __str__(self):
+        return self.__unicode__()
