@@ -37,6 +37,8 @@ class PersonalInfo(SingletonModel):
     region_shorthand = models.CharField(max_length=64, help_text="e.g. shorthand (abbr), MA for Massachusetts")
     email = models.EmailField()
     linkedin = models.URLField(blank=True)
+    facebook = models.URLField(blank=True)
+    twitter = models.URLField(blank=True)
     
     class Meta:
         verbose_name_plural = "Personal Info"
