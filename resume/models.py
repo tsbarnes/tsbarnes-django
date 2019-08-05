@@ -36,6 +36,7 @@ class PersonalInfo(SingletonModel):
     region = models.CharField(max_length=255, help_text="e.g. state such as Massachusetts")
     region_shorthand = models.CharField(max_length=64, help_text="e.g. shorthand (abbr), MA for Massachusetts")
     email = models.EmailField()
+    avatar = models.ImageField(blank=True, default='no-img.gif')
     linkedin = models.URLField(blank=True)
     facebook = models.URLField(blank=True)
     twitter = models.URLField(blank=True)
