@@ -1,4 +1,6 @@
 from django.db import models 
+from adminsortable.models import SortableMixin
+from adminsortable.fields import SortableForeignKey
 import time
 
 
@@ -53,6 +55,7 @@ class Education(models.Model):
 
     class Meta:
         verbose_name_plural = "Education"
+        ordering = ['-completion_date','-start_date']
 
     def edu_date_range(self):
         return ''.join(['(', self.formatted_start_date(), 
@@ -122,13 +125,11 @@ class Job(models.Model):
     def __unicode__(self):
         return ' '.join([self.company, self.job_date_range()])
 
-class Accomplishment(models.Model):
+class Accomplishment(SortableMixin):
     description = models.TextField()
     #job = models.ForeignKey(Job)
     job = models.ForeignKey('Job',on_delete=models.CASCADE)
-    
-
-    order = models.IntegerField()
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
     class Meta:
         db_table = 'accomplishments'
@@ -137,19 +138,24 @@ class Accomplishment(models.Model):
     def __unicode__(self):
         return ''.join([self.job.company, '-', self.description[0:50], '...'])
 
-class Skillset(models.Model):
+class Skillset(SortableMixin):
     name = models.CharField(max_length=250)
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+
+    class Meta:
+        ordering = ['order']
 
     def __unicode__(self):
         return self.name
 
-class Skill(models.Model):
+class Skill(SortableMixin):
     name =  models.CharField(max_length=250)
     skill_url = models.URLField('Skill URL', blank=True)
-    skillset = models.ForeignKey('Skillset',on_delete=models.CASCADE)
-    
+    skillset = SortableForeignKey('Skillset',on_delete=models.CASCADE)
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+
     class Meta:
-        ordering = ['id']
+        ordering = ['order']
 
     def __unicode__(self):
         return ''.join([self.skillset.name, '-', self.name])

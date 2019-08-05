@@ -42,6 +42,7 @@ INSTALLED_APPS = [
   'admin_tools.theming',
   'admin_tools.menu',
   'admin_tools.dashboard',
+  'adminsortable',
   'django.contrib.admin',
   'django.contrib.auth',
   'django.contrib.contenttypes',
@@ -78,6 +79,7 @@ TEMPLATES = [
       'context_processors': [
         'django.template.context_processors.debug',
         'django.template.context_processors.request',
+        'django.template.context_processors.static',
         'django.contrib.auth.context_processors.auth',
         'django.contrib.messages.context_processors.messages',
       ],
