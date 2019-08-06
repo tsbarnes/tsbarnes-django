@@ -6,8 +6,8 @@ from resume.models import PersonalInfo, Overview
 
 def index(request):
   return render(request, 'index.html', {
-    'articles': Article.objects.all(),
-    'projects': Project.objects.all(),
+    'articles': Article.objects.all()[0:5],
+    'projects': Project.objects.all()[0:5],
     'personal': PersonalInfo.objects.first(),
     'overview': Overview.objects.first().text,
   })

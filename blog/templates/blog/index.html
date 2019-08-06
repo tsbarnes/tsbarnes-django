@@ -1,33 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="m-2">
-    {% if article_list %}
-      {% for article in article_list %}
-        <div class="col-md-4">
-          <div class="card">
-            {% if article.header_image %}
-              <img class="card-img" src="{{ article.header_image.url }}">
-            {% endif %}
-            <div class="card-body">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="card-title">{{ article.title }}</h5>
-                <small>{{ article.date }}</small>
+  <div class="card mt-2">
+    <h1 class="card-header">Articles</h1>
+    <div class="card-body">
+      {% if article_list %}
+        {% for article in article_list %}
+          <div class="col-md-4">
+            <div class="card">
+              {% if article.header_image %}
+                <img class="card-img" src="{{ article.header_image.url }}">
+              {% endif %}
+              <div class="card-body">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="card-title">{{ article.title }}</h5>
+                  <small>{{ article.date }}</small>
+                </div>
+                <p class="card-text">
+                  {{ article.short|safe }}
+                </p>
+                <a class="btn btn-primary" href="/blog/{{ article.slug }}/">Read more...</a>
               </div>
-              <p class="card-text">
-                {{ article.short|safe }}
-              </p>
-              <a class="btn btn-primary" href="/blog/{{ article.slug }}/">Read more...</a>
             </div>
           </div>
+        {% endfor %}
+      {% else %}
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">No articles are available.</p>
+          </div>
         </div>
-      {% endfor %}
-    {% else %}
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">No articles are available.</p>
-        </div>
-      </div>
-    {% endif %}
+      {% endif %}
+    </div>
   </div>
 {% endblock %}

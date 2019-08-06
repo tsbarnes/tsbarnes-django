@@ -1,57 +1,75 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-md-4">
-      <div class="row">
-        <div class="card">
-          {% if personal.avatar %}
-            <img class="card-img" src="{{ personal.avatar.url }}">
+  <div class="row no-gutters mt-2">
+    <div class="card col-md-4 flex-grow-1">
+      {% if personal.avatar %}
+        <img class="card-img" src="{{ personal.avatar.url }}">
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ personal }}</h5>
+        <small>{{ personal.locality }}</span>, <abbr class="region" title="{{ personal.region }}">{{ personal.region_shorthand }}</abbr></small>
+        <p class="card-text">
+          {% if personal.email %}
+            <div class="email"><a href="mailto:{{ personal.email }}">{{ personal.email }}</a></div>
           {% endif %}
-          <div class="card-body">
-            <h5 class="card-title">{{ personal }}</h5>
-            <small>{{ personal.locality }}</span>, <abbr class="region" title="{{ personal.region }}">{{ personal.region_shorthand }}</abbr></small>
-            <p class="card-text">
-              {% if personal.email %}
-                <div class="email"><a href="mailto:{{ personal.email }}">{{ personal.email }}</a></div>
+        </p>
+        <p class="card-text">
+          {% if personal.linkedin %}
+            <div class="linkedin">
+              <a href="{{ personal.linkedin }}">{{ personal.linkedin|slice:"11:" }}</a>
+            </div>
+          {% endif %}
+        </p>
+        <p class="card-text">
+          {{ overview }}
+        </p>
+      </div>
+    </div>
+    <div class="card col-md-8 flex-grow-1">
+      <h1 class="card-header">Articles</h1>
+      <div class="card-body">
+        <div class="row no-gutters">
+          {% for article in articles %}
+            <div class="card col-md-6 flex-grow-1">
+              {% if article.header_image %}
+                <img class="card-img" src="{{ article.header_image.url }}">
               {% endif %}
-            </p>
-            <p class="card-text">
-              {% if personal.linkedin %}
-                <div class="linkedin">
-                  <a href="{{ personal.linkedin }}">{{ personal.linkedin|slice:"11:" }}</a>
+              <div class="card-body">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="card-title">{{ article.title }}</h5>
+                  <small>{{ article.date }}</small>
                 </div>
-              {% endif %}
-            </p>
-            <p class="card-text">
-              {{ overview }}
-            </p>
-          </div>
+                <p class="card-text">
+                  {{ article.short|safe }}
+                </p>
+                <a class="btn btn-primary" href="/blog/{{ article.slug }}/">Read more...</a>
+              </div>
+            </div>
+          {% endfor %}
         </div>
       </div>
     </div>
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-body">
-          <h1 class="card-title">Projects</h1>
+  </div>
+  <div class="row no-gutters mt-2">
+    <div class="card">
+      <h1 class="card-header">Projects</h1>
+      <div class="card-body">
+        <div class="row no-gutters">
+          {% for project in projects %}
+            <div class="card col-md-4 flex-grow-1">
+                <img class="card-img-top" src="{{ project.header_image.url }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ project.title }}</h5>
+                    <p class="card-text">{{ project.short|safe }}</p>
+                    <a href="{% url 'detail' project.slug %}"
+                      class="btn btn-primary">
+                        Read More
+                    </a>
+                </div>
+            </div>
+          {% endfor %}
         </div>
-      </div>
-      <div class="row">
-        {% for project in projects %}
-          <div class="col-md-4">
-              <div class="card mb-2">
-                  <img class="card-img-top" src="{{ project.header_image.url }}">
-                  <div class="card-body">
-                      <h5 class="card-title">{{ project.title }}</h5>
-                      <p class="card-text">{{ project.text }}</p>
-                      <a href="{% url 'detail' project.slug %}"
-                        class="btn btn-primary">
-                          Read More
-                      </a>
-                  </div>
-              </div>
-          </div>
-        {% endfor %}
       </div>
     </div>
   </div>
