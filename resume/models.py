@@ -40,6 +40,10 @@ class PersonalInfo(SingletonModel):
     linkedin = models.URLField(blank=True)
     facebook = models.URLField(blank=True)
     twitter = models.URLField(blank=True)
+    github = models.URLField(blank=True)
+    gitlab = models.URLField(blank=True)
+    itchio = models.URLField(blank=True)
+    medium = models.URLField(blank=True)
     
     class Meta:
         verbose_name_plural = "Personal Info"

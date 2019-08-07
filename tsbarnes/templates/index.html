@@ -24,6 +24,18 @@
           {% if personal.twitter %}
             <a href="{{ personal.twitter }}" class="socicon-twitter" title="{{ personal.twitter|slice:"8:" }}"></a>
           {% endif %}
+          {% if personal.github %}
+            <a href="{{ personal.github }}" class="socicon-github" title="{{ personal.github|slice:"8:" }}"></a>
+          {% endif %}
+          {% if personal.gitlab %}
+            <a href="{{ personal.gitlab }}" class="socicon-gitlab" title="{{ personal.gitlab|slice:"8:" }}"></a>
+          {% endif %}
+          {% if personal.itchio %}
+            <a href="{{ personal.itchio }}" class="socicon-itchio" title="{{ personal.itchio|slice:"8:" }}"></a>
+          {% endif %}
+          {% if personal.medium %}
+            <a href="{{ personal.medium }}" class="socicon-medium" title="{{ personal.medium|slice:"8:" }}"></a>
+          {% endif %}
         </p>
         <p class="card-text">
           {{ overview }}
