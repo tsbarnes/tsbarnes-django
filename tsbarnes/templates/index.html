@@ -16,19 +16,13 @@
         </p>
         <p class="card-text">
           {% if personal.linkedin %}
-            <div class="linkedin">
-              <a href="{{ personal.linkedin }}">{{ personal.linkedin|slice:"12:" }}</a>
-            </div>
+            <a href="{{ personal.linkedin }}" class="socicon-linkedin" title="{{ personal.linkedin|slice:"12:" }}"></a>
           {% endif %}
           {% if personal.facebook %}
-            <div class="facebook">
-              <a href="{{ personal.facebook }}">{{ personal.facebook|slice:"12:" }}</a>
-            </div>
+            <a href="{{ personal.facebook }}" class="socicon-facebook" title="{{ personal.facebook|slice:"12:" }}"></a>
           {% endif %}
           {% if personal.twitter %}
-            <div class="twitter">
-              <a href="{{ personal.twitter }}">{{ personal.twitter|slice:"8:" }}</a>
-            </div>
+            <a href="{{ personal.twitter }}" class="socicon-twitter" title="{{ personal.twitter|slice:"8:" }}"></a>
           {% endif %}
         </p>
         <p class="card-text">
