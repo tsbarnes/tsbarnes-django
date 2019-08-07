@@ -34,7 +34,7 @@ $grays: map-merge(
   $grays
 );
 
-$blue:    #007bff !default;
+$blue:    #3d49cd !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #e83e8c !default;
@@ -229,12 +229,12 @@ $grid-gutter-width:           30px !default;
 $line-height-lg:              1.5 !default;
 $line-height-sm:              1.5 !default;
 
-$border-width:                1px !default;
-$border-color:                $gray-300 !default;
+$border-width:                5px !default;
+$border-color:                $gray-500 !default;
 
-$border-radius:               .25rem !default;
-$border-radius-lg:            .3rem !default;
-$border-radius-sm:            .2rem !default;
+$border-radius:               0rem !default;
+$border-radius-lg:            0rem !default;
+$border-radius-sm:            0rem !default;
 
 $rounded-pill:                50rem !default;
 
@@ -821,10 +821,10 @@ $card-spacer-y:                     .75rem !default;
 $card-spacer-x:                     1.25rem !default;
 $card-border-width:                 $border-width !default;
 $card-border-radius:                $border-radius !default;
-$card-border-color:                 rgba($black, .125) !default;
+$card-border-color:                 $gray-500 !default;
 $card-inner-border-radius:          calc(#{$card-border-radius} - #{$card-border-width}) !default;
-$card-cap-bg:                       rgba($black, .03) !default;
-$card-cap-color:                    null !default;
+$card-cap-bg:                       $blue !default;
+$card-cap-color:                    $white !default;
 $card-color:                        null !default;
 $card-bg:                           $white !default;
 
