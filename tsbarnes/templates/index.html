@@ -17,7 +17,17 @@
         <p class="card-text">
           {% if personal.linkedin %}
             <div class="linkedin">
-              <a href="{{ personal.linkedin }}">{{ personal.linkedin|slice:"11:" }}</a>
+              <a href="{{ personal.linkedin }}">{{ personal.linkedin|slice:"12:" }}</a>
+            </div>
+          {% endif %}
+          {% if personal.facebook %}
+            <div class="facebook">
+              <a href="{{ personal.facebook }}">{{ personal.facebook|slice:"12:" }}</a>
+            </div>
+          {% endif %}
+          {% if personal.twitter %}
+            <div class="twitter">
+              <a href="{{ personal.twitter }}">{{ personal.twitter|slice:"8:" }}</a>
             </div>
           {% endif %}
         </p>
