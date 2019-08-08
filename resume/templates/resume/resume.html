@@ -51,6 +51,11 @@
                     <li>{{ a.description }}</li>
                   {% endfor %}
                 </ul>
+                <ul class="projects">
+                  {% for project in job.project_set.all %}
+                    <li><a href="{% url 'detail' project.slug %}">{{ project.title }}</a></li>
+                  {% endfor %}
+                </ul>
               </li>
             {% endif %}
           {% endfor %}
