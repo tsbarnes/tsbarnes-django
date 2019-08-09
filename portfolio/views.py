@@ -7,9 +7,13 @@ from .models import Project
 
 
 class IndexView(generic.ListView):
-    model = Project
-    template_name = 'portfolio/index.html'
+  model = Project
+  template_name = 'portfolio/index.html'
+
+  def get_queryset(self):
+    queryset = Project.objects.filter(published=True)
+    return queryset
 
 class DetailView(generic.DetailView):
-    model = Project
-    template_name = 'portfolio/detail.html'
+  model = Project
+  template_name = 'portfolio/detail.html'
