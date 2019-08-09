@@ -7,8 +7,8 @@ from .models import Overview, PersonalInfo, Education, Job, Accomplishment, Skil
 
 def index(request):
   site_name = RequestSite(request).domain
-  personal_info = PersonalInfo.objects.all()[:1]
-  overview = Overview.objects.all()[:1]
+  personal_info = PersonalInfo.objects.first()
+  overview = Overview.objects.first()
   education = Education.objects.all()
   job_list = Job.objects.filter(is_public=True)
   skill_sets = Skillset.objects.all()
