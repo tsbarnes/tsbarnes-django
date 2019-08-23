@@ -2,7 +2,7 @@
 
 {% block content %}
   <!-- Personal Contact Information in hCard markup --> 
-  <div id="contactinfo" class="vcard card">
+  <div id="contactinfo" class="vcard card m-2">
     <h2 class="card-header">Personal Info</h2>
     <div class="card-body">
       <h1 class="fn n card-title" id="name"><a class="url" href="{% if request.is_secure %}https{% else %}http{% endif %}://{{ site_name }}{% url 'resume_home' %}" rel="me"><span class="given-name">{{ personal_info.first_name}}</span> <span class="family-name">{{ personal_info.last_name }}</span></a></h1> 
@@ -19,57 +19,43 @@
       </p>
 
     </div>
-    <ul class="list-group list-group-flush">
+    <div class="btn-group" role="group" aria-label="Social media links">
       {% if personal_info.linkedin %}
-        <li class="list-group-item">
-          <a href="{{ personal_info.linkedin }}" class="socicon-linkedin" title="{{ personal_info.linkedin|slice:"12:" }}">{{ personal_info.linkedin|slice:"12:" }}</a>
-        </li>
+        <a href="{{ personal_info.linkedin }}" class="btn btn-primary socicon-linkedin" title="{{ personal_info.linkedin|slice:"12:" }}"></a>
       {% endif %}
       {% if personal_info.facebook %}
-        <li class="list-group-item">
-          <a href="{{ personal_info.facebook }}" class="socicon-facebook" title="{{ personal_info.facebook|slice:"12:" }}">{{ personal_info.facebook|slice:"12:" }}</a>
-        </li>
+        <a href="{{ personal_info.facebook }}" class="btn btn-primary socicon-facebook" title="{{ personal_info.facebook|slice:"12:" }}"></a>
       {% endif %}
       {% if personal_info.twitter %}
-        <li class="list-group-item">
-          <a href="{{ personal_info.twitter }}" class="socicon-twitter" title="{{ personal_info.twitter|slice:"8:" }}">{{ personal_info.twitter|slice:"8:" }}</a>
-        </li>
+        <a href="{{ personal_info.twitter }}" class="btn btn-primary socicon-twitter" title="{{ personal_info.twitter|slice:"8:" }}"></a>
       {% endif %}
       {% if personal_info.github %}
-        <li class="list-group-item">
-          <a href="{{ personal_info.github }}" class="socicon-github" title="{{ personal_info.github|slice:"8:" }}">{{ personal_info.github|slice:"8:" }}</a>
-        </li>
+        <a href="{{ personal_info.github }}" class="btn btn-primary socicon-github" title="{{ personal_info.github|slice:"8:" }}"></a>
       {% endif %}
       {% if personal_info.gitlab %}
-        <li class="list-group-item">
-          <a href="{{ personal_info.gitlab }}" class="socicon-gitlab" title="{{ personal_info.gitlab|slice:"8:" }}">{{ personal_info.gitlab|slice:"8:" }}</a>
-        </li>
+        <a href="{{ personal_info.gitlab }}" class="btn btn-primary socicon-gitlab" title="{{ personal_info.gitlab|slice:"8:" }}"></a>
       {% endif %}
       {% if personal_info.itchio %}
-        <li class="list-group-item">
-          <a href="{{ personal_info.itchio }}" class="socicon-itchio" title="{{ personal_info.itchio|slice:"8:" }}">{{ personal_info.itchio|slice:"8:" }}</a>
-        </li>
+        <a href="{{ personal_info.itchio }}" class="btn btn-primary socicon-itchio" title="{{ personal_info.itchio|slice:"8:" }}"></a>
       {% endif %}
       {% if personal_info.medium %}
-        <li class="list-group-item">
-          <a href="{{ personal_info.medium }}" class="socicon-medium" title="{{ personal_info.medium|slice:"8:" }}">{{ personal_info.medium|slice:"8:" }}</a>
-        </li>
+        <a href="{{ personal_info.medium }}" class="btn btn-primary socicon-medium" title="{{ personal_info.medium|slice:"8:" }}"></a>
       {% endif %}
-    </ul>
+    </div>
   </div>
   <!-- End Personal Contact Information --> 
   
-  <div class="card">
+  <div class="card m-2">
     <h2 class="card-header">Experience</h2>
     <div class="card-body">
       <ul id="job-list" class="vcalendar">
         {% for job in job_list %}
           {% if job.is_public %}
             <li class="experience vevent vcard">
-              <span class="org">{{ job.company }}</span> - <span class="location">{{ job.location }}</span>
+              <strong class="org">{{ job.company }}</strong> - <span class="location">{{ job.location }}</span>
               <br />
               <a class="include" href="#name"></a>
-              <span class="title">{{ job.title }}</span> 
+              <strong class="title">{{ job.title }}</strong> 
               <span class="period">(<abbr class="dtstart" title="{{ job.full_start_date }}">{{ job.formatted_start_date }}</abbr> - <abbr class="dtend" title="{{ job.full_end_date }}">{{ job.formatted_end_date }}</abbr>)</span>
               
               <div class="description">{{ job.description }}</div>
@@ -90,7 +76,7 @@
     </div>
   </div>
 
-  <div class="card">
+  <div class="card m-2">
     <h2 class="card-header">Skills</h2>
     <ul id="skill-list" class="list-group list-group-flush">
       {% for skillset in skill_sets %}
@@ -103,7 +89,7 @@
     </ul>
   </div>
   
-  <div class="card">
+  <div class="card m-2">
     <h2 class="card-header">Education</h2>
     <ul id="edu-list" class="vcalendar list-group list-group-flush">
       {% for edu in education %}
