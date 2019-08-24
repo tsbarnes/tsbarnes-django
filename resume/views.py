@@ -22,5 +22,10 @@ def index(request):
     'skill_sets' : skill_sets,
   })
 
+# TODO: add ability to upload a jsonresume
 def upload(request):
+  pass
+
+# TODO: add ability to download resume as json
+def json(request):
   pass
