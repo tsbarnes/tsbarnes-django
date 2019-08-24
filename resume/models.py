@@ -144,6 +144,17 @@ class Job(models.Model):
     def __str__(self):
         return self.__unicode__()
 
+class VolunteerJob(Job):
+    class Meta:
+        db_table = 'volunteer_jobs'
+        ordering = ['-completion_date','-start_date']
+
+    def __unicode__(self):
+        return ' '.join([self.company, self.job_date_range()])
+    
+    def __str__(self):
+        return self.__unicode__()
+
 class Accomplishment(SortableMixin):
     description = models.TextField()
     #job = models.ForeignKey(Job)
