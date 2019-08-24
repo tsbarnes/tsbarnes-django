@@ -37,13 +37,6 @@ class PersonalInfo(SingletonModel):
     region_shorthand = models.CharField(max_length=64, help_text="e.g. shorthand (abbr), MA for Massachusetts")
     email = models.EmailField()
     avatar = models.ImageField(blank=True, default='no-img.gif')
-    linkedin = models.URLField(blank=True)
-    facebook = models.URLField(blank=True)
-    twitter = models.URLField(blank=True)
-    github = models.URLField(blank=True)
-    gitlab = models.URLField(blank=True)
-    itchio = models.URLField(blank=True)
-    medium = models.URLField(blank=True)
     
     class Meta:
         verbose_name_plural = "Personal Info"
@@ -53,6 +46,22 @@ class PersonalInfo(SingletonModel):
     
     def __unicode__(self):
         return self.full_name()
+    
+    def __str__(self):
+        return self.__unicode__()
+
+class SocialAccount(SortableMixin):
+    name = models.CharField(max_length=50)
+    icon_name = models.CharField(max_length=30)
+    username = models.CharField(max_length=100, blank=True)
+    url = models.URLField()
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __unicode__(self):
+        return ''.join([self.username, ' on ', self.name])
     
     def __str__(self):
         return self.__unicode__()
@@ -196,6 +205,46 @@ class Skill(SortableMixin):
 
     def __unicode__(self):
         return ''.join([self.skillset.name, '-', self.name])
+    
+    def __str__(self):
+        return self.__unicode__()
+
+class Language(SortableMixin):
+    name = models.CharField(max_length=250)
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __unicode__(self):
+        return self.name
+    
+    def __str__(self):
+        return self.__unicode__()
+
+class Interest(SortableMixin):
+    name = models.CharField(max_length=250)
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __unicode__(self):
+        return self.name
+    
+    def __str__(self):
+        return self.__unicode__()
+
+class Reference(SortableMixin):
+    name = models.CharField(max_length=250)
+    reference_text = models.TextField()
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __unicode__(self):
+        return self.name
     
     def __str__(self):
         return self.__unicode__()

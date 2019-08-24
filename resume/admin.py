@@ -2,7 +2,7 @@ from django.contrib import admin
 from singlemodeladmin import SingleModelAdmin
 from adminsortable.admin import SortableAdmin
 
-from .models import Overview, PersonalInfo, Education, Job, VolunteerJob, Accomplishment, Skillset, Skill
+from .models import Overview, PersonalInfo, SocialAccount, Education, Job, VolunteerJob, Accomplishment, Skillset, Skill
 
 class AccomplishmentAdmin(SortableAdmin):
     list_display = ('job', 'description')
@@ -12,6 +12,7 @@ class SkillAdmin(SortableAdmin):
 
 admin.site.register(Overview, SingleModelAdmin)
 admin.site.register(PersonalInfo, SingleModelAdmin)
+admin.site.register(SocialAccount, SortableAdmin)
 admin.site.register(Education)
 admin.site.register(Job)
 admin.site.register(VolunteerJob)

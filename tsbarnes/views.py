@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from blog.models import Article
 from portfolio.models import Project
-from resume.models import PersonalInfo, Overview
+from resume.models import PersonalInfo, Overview, SocialAccount
 
 def index(request):
   return render(request, 'index.html', {
@@ -10,4 +10,5 @@ def index(request):
     'projects': Project.objects.filter(published=True)[0:5],
     'personal': PersonalInfo.objects.first(),
     'overview': Overview.objects.first().text,
+    'social_accounts': SocialAccount.objects.all()
   })

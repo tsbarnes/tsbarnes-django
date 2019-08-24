@@ -15,31 +15,13 @@
           {% endif %}
         </p>
         <p class="card-text">
-          {% if personal.linkedin %}
-            <a href="{{ personal.linkedin }}" class="socicon-linkedin" title="{{ personal.linkedin|slice:"12:" }}"></a>
-          {% endif %}
-          {% if personal.facebook %}
-            <a href="{{ personal.facebook }}" class="socicon-facebook" title="{{ personal.facebook|slice:"12:" }}"></a>
-          {% endif %}
-          {% if personal.twitter %}
-            <a href="{{ personal.twitter }}" class="socicon-twitter" title="{{ personal.twitter|slice:"8:" }}"></a>
-          {% endif %}
-          {% if personal.github %}
-            <a href="{{ personal.github }}" class="socicon-github" title="{{ personal.github|slice:"8:" }}"></a>
-          {% endif %}
-          {% if personal.gitlab %}
-            <a href="{{ personal.gitlab }}" class="socicon-gitlab" title="{{ personal.gitlab|slice:"8:" }}"></a>
-          {% endif %}
-          {% if personal.itchio %}
-            <a href="{{ personal.itchio }}" class="socicon-itchio" title="{{ personal.itchio|slice:"8:" }}"></a>
-          {% endif %}
-          {% if personal.medium %}
-            <a href="{{ personal.medium }}" class="socicon-medium" title="{{ personal.medium|slice:"8:" }}"></a>
-          {% endif %}
-        </p>
-        <p class="card-text">
           {{ overview }}
         </p>
+      </div>
+      <div class="btn-group" role="group" aria-label="Social media links">
+        {% for social in social_accounts %}
+          <a href="{{ social.url }}" class="btn btn-primary socicon-{{ social.icon_name }}" title="{{ social.name }}"></a>
+        {% endfor %}
       </div>
     </div>
     <div class="card col-md-8 flex-grow-1">

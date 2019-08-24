@@ -20,27 +20,9 @@
 
     </div>
     <div class="btn-group" role="group" aria-label="Social media links">
-      {% if personal_info.linkedin %}
-        <a href="{{ personal_info.linkedin }}" class="btn btn-primary socicon-linkedin" title="{{ personal_info.linkedin|slice:"12:" }}"></a>
-      {% endif %}
-      {% if personal_info.facebook %}
-        <a href="{{ personal_info.facebook }}" class="btn btn-primary socicon-facebook" title="{{ personal_info.facebook|slice:"12:" }}"></a>
-      {% endif %}
-      {% if personal_info.twitter %}
-        <a href="{{ personal_info.twitter }}" class="btn btn-primary socicon-twitter" title="{{ personal_info.twitter|slice:"8:" }}"></a>
-      {% endif %}
-      {% if personal_info.github %}
-        <a href="{{ personal_info.github }}" class="btn btn-primary socicon-github" title="{{ personal_info.github|slice:"8:" }}"></a>
-      {% endif %}
-      {% if personal_info.gitlab %}
-        <a href="{{ personal_info.gitlab }}" class="btn btn-primary socicon-gitlab" title="{{ personal_info.gitlab|slice:"8:" }}"></a>
-      {% endif %}
-      {% if personal_info.itchio %}
-        <a href="{{ personal_info.itchio }}" class="btn btn-primary socicon-itchio" title="{{ personal_info.itchio|slice:"8:" }}"></a>
-      {% endif %}
-      {% if personal_info.medium %}
-        <a href="{{ personal_info.medium }}" class="btn btn-primary socicon-medium" title="{{ personal_info.medium|slice:"8:" }}"></a>
-      {% endif %}
+      {% for social in social_accounts %}
+        <a href="{{ social.url }}" class="btn btn-primary socicon-{{ social.icon_name }}" title="{{ social.name }}"></a>
+      {% endfor %}
     </div>
   </div>
   <!-- End Personal Contact Information --> 
