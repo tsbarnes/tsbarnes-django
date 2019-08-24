@@ -176,6 +176,7 @@ class Skillset(SortableMixin):
 class Skill(SortableMixin):
     name =  models.CharField(max_length=250)
     skill_url = models.URLField('Skill URL', blank=True)
+    skill_level = models.CharField(max_length=20, blank=True)
     skillset = SortableForeignKey('Skillset',on_delete=models.CASCADE)
     order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
