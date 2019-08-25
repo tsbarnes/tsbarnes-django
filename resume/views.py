@@ -7,18 +7,22 @@ from django.contrib.auth.decorators import login_required
 from .models import Overview, PersonalInfo, SocialAccount, Education, Job, Accomplishment, Skillset, Skill
 
 def index(request):
+  site_name = RequestSite(request).domain
   personal_info = PersonalInfo.objects.first()
   overview = Overview.objects.first()
   social_accounts = SocialAccount.objects.all()
   education = Education.objects.all()
   job_list = Job.objects.filter(is_public=True)
+  volunteer_job_list = VolunteerJob.objects.filter(is_public=True)
   skill_sets = Skillset.objects.all()
 
   return render(request, 'resume/resume.html', {
+    'site_name': site_name,
     'personal_info': personal_info,
     'overview' : overview,
     'social_accounts' : social_accounts,
     'job_list' : job_list,
+    'volunteer_job_list': volunteer_job_list,
     'education' : education,
     'skill_sets' : skill_sets,
   })

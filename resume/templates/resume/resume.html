@@ -29,33 +29,60 @@
   
   <div class="card m-2">
     <h2 class="card-header">Experience</h2>
-    <div class="card-body">
-      <ul id="job-list" class="vcalendar">
-        {% for job in job_list %}
-          {% if job.is_public %}
-            <li class="experience vevent vcard">
-              <strong class="org">{{ job.company }}</strong> - <span class="location">{{ job.location }}</span>
-              <br />
-              <a class="include" href="#name"></a>
-              <strong class="title">{{ job.title }}</strong> 
-              <span class="period">(<abbr class="dtstart" title="{{ job.full_start_date }}">{{ job.formatted_start_date }}</abbr> - <abbr class="dtend" title="{{ job.full_end_date }}">{{ job.formatted_end_date }}</abbr>)</span>
-              
-              <div class="description">{{ job.description }}</div>
-              <ul class="achievements">
-                {% for a in job.accomplishment_set.all %}
-                  <li>{{ a.description }}</li>
-                {% endfor %}
-              </ul>
-              <ul class="projects">
-                {% for project in job.project_set.all %}
-                  <li><a href="{% url 'detail' project.slug %}">{{ project.title }}</a></li>
-                {% endfor %}
-              </ul>
-            </li>
-          {% endif %}
-        {% endfor %}
-      </ul>
-    </div>
+    <ul id="job-list" class="vcalendar list-group list-group-flush">
+      {% for job in job_list %}
+        {% if job.is_public %}
+          <li class="experience vevent vcard list-group-item">
+            <strong class="org">{{ job.company }}</strong> - <span class="location">{{ job.location }}</span>
+            <br />
+            <a class="include" href="#name"></a>
+            <strong class="title">{{ job.title }}</strong> 
+            <span class="period">(<abbr class="dtstart" title="{{ job.full_start_date }}">{{ job.formatted_start_date }}</abbr> - <abbr class="dtend" title="{{ job.full_end_date }}">{{ job.formatted_end_date }}</abbr>)</span>
+            
+            <div class="description">{{ job.description }}</div>
+            <ul class="achievements">
+              {% for a in job.accomplishment_set.all %}
+                <li>{{ a.description }}</li>
+              {% endfor %}
+            </ul>
+            <ul class="projects">
+              {% for project in job.project_set.all %}
+                <li><a href="{% url 'detail' project.slug %}">{{ project.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="card m-2">
+    <h2 class="card-header">Volunteer Experience</h2>
+    <ul id="job-list" class="vcalendar list-group list-group-flush">
+      {% for job in volunteer_job_list %}
+        {% if job.is_public %}
+          <li class="experience vevent vcard list-group-item">
+            <strong class="org">{{ job.company }}</strong> - <span class="location">{{ job.location }}</span>
+            <br />
+            <a class="include" href="#name"></a>
+            <strong class="title">{{ job.title }}</strong> 
+            <span class="period">(<abbr class="dtstart" title="{{ job.full_start_date }}">{{ job.formatted_start_date }}</abbr> - <abbr class="dtend" title="{{ job.full_end_date }}">{{ job.formatted_end_date }}</abbr>)</span>
+            
+            <div class="description">{{ job.description }}</div>
+            <ul class="achievements">
+              {% for a in job.accomplishment_set.all %}
+                <li>{{ a.description }}</li>
+              {% endfor %}
+            </ul>
+            <ul class="projects">
+              {% for project in job.project_set.all %}
+                <li><a href="{% url 'detail' project.slug %}">{{ project.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
   </div>
 
   <div class="card m-2">
@@ -76,7 +103,7 @@
     <ul id="edu-list" class="vcalendar list-group list-group-flush">
       {% for edu in education %}
         <li class="education vevent vcard list-group-item">
-          <span class="period"><abbr class="dtstart" title="{{ edu.full_start_date }}">{{ edu.formatted_start_date }}</abbr> - <abbr class="dtend" title="{{ edu.full_end_ate }}">{{ edu.formatted_end_date }}</abbr></span> - 
+          <span class="period"><abbr class="dtstart" title="{{ edu.full_start_date }}">{{ edu.formatted_start_date }}</abbr> - <abbr class="dtend" title="{{ edu.full_end_date }}">{{ edu.formatted_end_date }}</abbr></span> - 
           <span class="org"><a rel="employer" href="{{ edu.school_url }}" class="summary url" title="{{ edu.name }}">{{ edu.name }}</a></span> - <span class="location">{{ edu.location }}</span>
           <div class="summary"> {{ edu.summary }}</div>
         </li>

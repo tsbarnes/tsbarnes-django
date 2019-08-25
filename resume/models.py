@@ -73,6 +73,8 @@ class Education(models.Model):
     start_date = models.DateField()
     completion_date = models.DateField()
     summary = models.TextField()
+    study_type = models.CharField(max_length=100, null=True, blank=True)
+    gpa = models.FloatField(null=True, blank=True)
     is_current = models.BooleanField(default=False)
 
     class Meta:
@@ -107,6 +109,19 @@ class Education(models.Model):
     def __str__(self):
         return self.__unicode__()
 
+class Course(SortableMixin):
+    name = models.CharField(max_length=250)
+    education = SortableForeignKey('Education', on_delete=models.CASCADE)
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __unicode__(self):
+        return ''.join([self.job.company, '-', self.description[0:50], '...'])
+    
+    def __str__(self):
+        return self.__unicode__()
 
 class Job(models.Model):
     company = models.CharField(max_length=250)
@@ -167,11 +182,27 @@ class VolunteerJob(Job):
 class Accomplishment(SortableMixin):
     description = models.TextField()
     #job = models.ForeignKey(Job)
-    job = models.ForeignKey('Job',on_delete=models.CASCADE)
+    job = SortableForeignKey('Job', on_delete=models.CASCADE)
     order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
     class Meta:
         db_table = 'accomplishments'
+        ordering = ['order']
+
+    def __unicode__(self):
+        return ''.join([self.job.company, '-', self.description[0:50], '...'])
+    
+    def __str__(self):
+        return self.__unicode__()
+
+class VolunteerAccomplishment(SortableMixin):
+    description = models.TextField()
+    #job = models.ForeignKey(Job)
+    job = SortableForeignKey('VolunteerJob', on_delete=models.CASCADE)
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+
+    class Meta:
+        db_table = 'volunteer_accomplishments'
         ordering = ['order']
 
     def __unicode__(self):
@@ -197,7 +228,21 @@ class Skill(SortableMixin):
     name =  models.CharField(max_length=250)
     skill_url = models.URLField('Skill URL', blank=True)
     skill_level = models.CharField(max_length=20, blank=True)
-    skillset = SortableForeignKey('Skillset',on_delete=models.CASCADE)
+    skillset = SortableForeignKey('Skillset', on_delete=models.CASCADE)
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __unicode__(self):
+        return ''.join([self.skillset.name, '-', self.name])
+    
+    def __str__(self):
+        return self.__unicode__()
+
+class SkillKeyword(SortableMixin):
+    name = models.CharField(max_length=250)
+    skill = SortableForeignKey('Skill', on_delete=models.CASCADE)
     order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
     class Meta:
@@ -211,6 +256,7 @@ class Skill(SortableMixin):
 
 class Language(SortableMixin):
     name = models.CharField(max_length=250)
+    fluency = models.CharField(max_length=250)
     order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
     class Meta:
@@ -224,6 +270,20 @@ class Language(SortableMixin):
 
 class Interest(SortableMixin):
     name = models.CharField(max_length=250)
+    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __unicode__(self):
+        return self.name
+    
+    def __str__(self):
+        return self.__unicode__()
+
+class InterestKeyword(SortableMixin):
+    name = models.CharField(max_length=250)
+    interest = SortableForeignKey('Interest', on_delete=models.CASCADE)
     order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
     class Meta:
