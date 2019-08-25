@@ -3,24 +3,24 @@
 {% block content %}
   <div class="row no-gutters mt-2">
     <div class="card col-md-4 flex-grow-1">
-      {% if personal.avatar %}
-        <img class="card-img" src="{{ personal.avatar.url }}">
+      {% if basics.picture %}
+        <img class="card-img" src="{{ basics.picture.url }}">
       {% endif %}
       <div class="card-body">
-        <h5 class="card-title">{{ personal }}</h5>
-        <small>{{ personal.locality }}</span>, <abbr class="region" title="{{ personal.region }}">{{ personal.region_shorthand }}</abbr></small>
+        <h5 class="card-title">{{ basics.name }}</h5>
+        <small>{{ basics.location.city }}</span>, <abbr class="region" title="{{ basics.location.region }}">{{ basics.location.region_shorthand }}</abbr></small>
         <p class="card-text">
           {% if personal.email %}
-            <div class="email"><a href="mailto:{{ personal.email }}">{{ personal.email }}</a></div>
+            <div class="email"><a href="mailto:{{ basics.email }}">{{ basics.email }}</a></div>
           {% endif %}
         </p>
         <p class="card-text">
-          {{ overview }}
+          {{ basics.summary }}
         </p>
       </div>
       <div class="btn-group" role="group" aria-label="Social media links">
-        {% for social in social_accounts %}
-          <a href="{{ social.url }}" class="btn btn-primary socicon-{{ social.icon_name }}" title="{{ social.name }}"></a>
+        {% for social in profiles %}
+          <a href="{{ social.url }}" class="btn btn-primary socicon-{{ social.icon_name }}" title="{{ social }}"></a>
         {% endfor %}
       </div>
     </div>

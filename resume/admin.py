@@ -11,6 +11,7 @@ class SkillAdmin(SortableAdmin):
     list_display = ('skillset', 'name')
 
 admin.site.register(Basics, SingleModelAdmin)
+admin.site.register(Location)
 admin.site.register(Profile, SortableAdmin)
 admin.site.register(Education)
 admin.site.register(Work)

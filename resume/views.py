@@ -11,17 +11,16 @@ def index(request):
   basics = Basics.objects.first()
   profiles = Profile.objects.all()
   education = Education.objects.all()
-  work = Work.objects.filter(is_public=True)
-  volunteer_work = Volunteer.objects.filter(is_public=True)
+  work = Work.objects.all()
+  volunteer_work = Volunteer.objects.all()
   skill_sets = Skillset.objects.all()
 
   return render(request, 'resume/resume.html', {
     'site_name': site_name,
-    'personal_info': personal_info,
-    'overview' : overview,
-    'social_accounts' : social_accounts,
-    'job_list' : job_list,
-    'volunteer_job_list': volunteer_job_list,
+    'basics': basics,
+    'profiles' : profiles,
+    'work' : work,
+    'volunteer_work': volunteer_work,
     'education' : education,
     'skill_sets' : skill_sets,
   })

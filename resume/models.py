@@ -30,8 +30,8 @@ class Basics(SingletonModel):
     location = models.ForeignKey('Location', on_delete=models.CASCADE)
     
     class Meta:
-        verbose_name_plural = "Personal Info"
-    
+        verbose_name_plural = "Basics"
+
     def name(self):
         return " ".join([self.first_name, self.last_name])
     
@@ -39,7 +39,7 @@ class Basics(SingletonModel):
         return ''.join(["https://", RequestSite(request).domain])
     
     def __unicode__(self):
-        return self.full_name()
+        return self.name()
     
     def __str__(self):
         return self.__unicode__()
@@ -63,7 +63,9 @@ class Profile(SortableMixin):
         ordering = ['order']
 
     def __unicode__(self):
-        return ''.join([self.username, ' on ', self.name])
+        if self.username:
+            return ''.join([self.username, ' on ', self.network])
+        return self.network
     
     def __str__(self):
         return self.__unicode__()
@@ -132,6 +134,7 @@ class Work(models.Model):
     summary = models.TextField()
 
     class Meta:
+        verbose_name_plural = "Work"
         ordering = ['-end_date','-start_date']
         
     def job_date_range(self):
@@ -171,6 +174,8 @@ class Volunteer(models.Model):
     summary = models.TextField()
 
     class Meta:
+        verbose_name = "Volunteer Work"
+        verbose_name_plural = "Volunteer Work"
         ordering = ['-end_date','-start_date']
         
     def job_date_range(self):

@@ -5,23 +5,23 @@
   <div id="contactinfo" class="vcard card m-2">
     <h2 class="card-header">Personal Info</h2>
     <div class="card-body">
-      <h1 class="fn n card-title" id="name"><a class="url" href="{% if request.is_secure %}https{% else %}http{% endif %}://{{ site_name }}{% url 'resume_home' %}" rel="me"><span class="given-name">{{ personal_info.first_name}}</span> <span class="family-name">{{ personal_info.last_name }}</span></a></h1> 
+      <h1 class="fn n card-title" id="name"><a class="url" href="{% if request.is_secure %}https{% else %}http{% endif %}://{{ site_name }}{% url 'resume_home' %}" rel="me"><span class="given-name">{{ basics.first_name}}</span> <span class="family-name">{{ basics.last_name }}</span></a></h1> 
       <div class="adr">
-        <span class="locality">{{ personal_info.locality }}</span>, <abbr class="region" title="{{ personal_info.region }}">{{ personal_info.region_shorthand }}</abbr> 
+        <span class="locality">{{ basics.location.city }}</span>, <abbr class="region" title="{{ basics.location.region }}">{{ basics.location.region_shorthand }}</abbr> 
       </div>
       
-      {% if personal_info.email %}
-        <div class="email"><a href="mailto:{{ personal_info.email }}">{{ personal_info.email }}</a></div>
+      {% if basics.email %}
+        <div class="email"><a href="mailto:{{ basics.email }}">{{ basics.email }}</a></div>
       {% endif %}
 
       <p class="summary card-text">
-        {{ overview.text|safe }}
+        {{ basics.summary|safe }}
       </p>
 
     </div>
     <div class="btn-group" role="group" aria-label="Social media links">
-      {% for social in social_accounts %}
-        <a href="{{ social.url }}" class="btn btn-primary socicon-{{ social.icon_name }}" title="{{ social.name }}"></a>
+      {% for profile in profiles %}
+        <a href="{{ profile.url }}" class="btn btn-primary socicon-{{ profile.icon_name }}" title="{{ profile }}"></a>
       {% endfor %}
     </div>
   </div>
