@@ -37,6 +37,7 @@ class PersonalInfo(SingletonModel):
     region_shorthand = models.CharField(max_length=64, help_text="e.g. shorthand (abbr), MA for Massachusetts")
     email = models.EmailField()
     avatar = models.ImageField(blank=True, default='no-img.gif')
+    label = models.CharField(max_length=250, blank=True)
     
     class Meta:
         verbose_name_plural = "Personal Info"

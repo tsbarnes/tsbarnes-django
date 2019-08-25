@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.sites.requests import RequestSite
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
@@ -34,4 +34,19 @@ def upload(request):
 
 # TODO: add ability to download resume as json
 def json(request):
-  pass
+  resume = {
+    "basics": {
+    }
+  }
+
+  personal_info = PersonalInfo.objects.first()
+  resume["basics"]["name"] = personal_info.full_name()
+  resume["basics"]["email"] = personal_info.email
+  resume["basics"]["website"] = RequestSite(request).domain
+  resume["basics"]["summary"] = Overview.objects.first().text
+  resume["basics"]["location"] = {
+    "city": personal_info.locality,
+    "region": personal_info.region,
+  }
+
+  return JsonResponse(resume)
