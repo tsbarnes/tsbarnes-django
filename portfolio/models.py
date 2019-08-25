@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from adminsortable.models import SortableMixin
-from resume.models import Job
+from resume.models import Work, Volunteer
 
 class Project(SortableMixin):
   slug = models.SlugField(blank=False)
@@ -15,7 +15,8 @@ class Project(SortableMixin):
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
   published = models.BooleanField(default=False)
-  job = models.ForeignKey(Job, on_delete=models.SET_NULL, blank=True, null=True)
+  job = models.ForeignKey('resume.Work', on_delete=models.SET_NULL, blank=True, null=True)
+  volunteer_job = models.ForeignKey('resume.Volunteer', on_delete=models.SET_NULL, blank=True, null=True)
   order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
   class Meta:

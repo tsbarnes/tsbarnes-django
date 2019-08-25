@@ -4,16 +4,15 @@ from django.contrib.sites.requests import RequestSite
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
-from .models import Overview, PersonalInfo, SocialAccount, Education, Job, Accomplishment, Skillset, Skill
+from .models import Basics, Profile, Education, Work, Volunteer, Skillset, Skill
 
 def index(request):
   site_name = RequestSite(request).domain
-  personal_info = PersonalInfo.objects.first()
-  overview = Overview.objects.first()
-  social_accounts = SocialAccount.objects.all()
+  basics = Basics.objects.first()
+  profiles = Profile.objects.all()
   education = Education.objects.all()
-  job_list = Job.objects.filter(is_public=True)
-  volunteer_job_list = VolunteerJob.objects.filter(is_public=True)
+  work = Work.objects.filter(is_public=True)
+  volunteer_work = Volunteer.objects.filter(is_public=True)
   skill_sets = Skillset.objects.all()
 
   return render(request, 'resume/resume.html', {

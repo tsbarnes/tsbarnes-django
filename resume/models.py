@@ -19,31 +19,24 @@ class SingletonModel(models.Model):
     except cls.DoesNotExist:
       return cls()
 
-class Overview(SingletonModel):
-    text = models.TextField()
-    class Meta:
-        verbose_name_plural = "Overview"
-    def __unicode__(self):
-        return self.text[0:40] + '...'
-    
-    def __str__(self):
-        return self.__unicode__()
-
-class PersonalInfo(SingletonModel):
+class Basics(SingletonModel):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    locality = models.CharField(max_length=255, help_text="e.g. city such as Boston")
-    region = models.CharField(max_length=255, help_text="e.g. state such as Massachusetts")
-    region_shorthand = models.CharField(max_length=64, help_text="e.g. shorthand (abbr), MA for Massachusetts")
-    email = models.EmailField()
-    avatar = models.ImageField(blank=True, default='no-img.gif')
     label = models.CharField(max_length=250, blank=True)
+    picture = models.ImageField(blank=True, default='no-img.gif')
+    email = models.EmailField()
+    phone = models.CharField(max_length=20, blank=True)
+    summary = models.TextField()
+    location = models.ForeignKey('Location', on_delete=models.CASCADE)
     
     class Meta:
         verbose_name_plural = "Personal Info"
     
-    def full_name(self):
+    def name(self):
         return " ".join([self.first_name, self.last_name])
+    
+    def website(self):
+        return ''.join(["https://", RequestSite(request).domain])
     
     def __unicode__(self):
         return self.full_name()
@@ -51,9 +44,17 @@ class PersonalInfo(SingletonModel):
     def __str__(self):
         return self.__unicode__()
 
-class SocialAccount(SortableMixin):
-    name = models.CharField(max_length=50)
-    icon_name = models.CharField(max_length=30)
+class Location(models.Model):
+    address = models.CharField(max_length=255, blank=True)
+    postal_code = models.CharField(max_length=20, blank=True)
+    city = models.CharField(max_length=255, help_text="e.g. city such as Boston")
+    country_code = models.CharField(max_length=3, default="US")
+    region = models.CharField(max_length=255, help_text="e.g. state such as Massachusetts")
+    region_shorthand = models.CharField(max_length=64, help_text="e.g. shorthand (abbr), MA for Massachusetts")
+
+class Profile(SortableMixin):
+    network = models.CharField(max_length=50)
+    icon_name = models.CharField(max_length=30, default="mail")
     username = models.CharField(max_length=100, blank=True)
     url = models.URLField()
     order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
@@ -68,19 +69,17 @@ class SocialAccount(SortableMixin):
         return self.__unicode__()
 
 class Education(models.Model):
-    name = models.CharField(max_length=250)
-    location = models.CharField(max_length=250)
+    institution = models.CharField(max_length=250)
+    area = models.CharField(max_length=250)
     school_url = models.URLField('School URL')
-    start_date = models.DateField()
-    completion_date = models.DateField()
-    summary = models.TextField()
     study_type = models.CharField(max_length=100, null=True, blank=True)
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
     gpa = models.FloatField(null=True, blank=True)
-    is_current = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = "Education"
-        ordering = ['-completion_date','-start_date']
+        ordering = ['-end_date','-start_date']
 
     def edu_date_range(self):
         return ''.join(['(', self.formatted_start_date(), 
@@ -93,16 +92,16 @@ class Education(models.Model):
         if (self.is_current == True):
             return time.strftime("%Y-%m-%d", time.localtime())
         else:
-            return self.completion_date.strftime("%Y-%m-%d")
+            return self.end_date.strftime("%Y-%m-%d")
 
     def formatted_start_date(self):
         return self.start_date.strftime("%b %Y")
 
     def formatted_end_date(self):
-        if (self.is_current == True):
+        if not self.end_date:
             return "Current"
         else:
-            return self.completion_date.strftime("%b %Y")
+            return self.end_date.strftime("%b %Y")
 
     def __unicode__(self):
         return ' '.join([self.name, self.edu_date_range()])
@@ -124,22 +123,16 @@ class Course(SortableMixin):
     def __str__(self):
         return self.__unicode__()
 
-class Job(models.Model):
+class Work(models.Model):
     company = models.CharField(max_length=250)
-    location = models.CharField(max_length=250)
-    title = models.CharField(max_length=250)
-    company_url = models.URLField('Company URL')
-    description = models.TextField(blank=True)
+    position = models.CharField(max_length=250)
+    website = models.URLField('Company URL')
     start_date = models.DateField()
-    completion_date = models.DateField()
-    is_current = models.BooleanField(default=False)
-    is_public = models.BooleanField(default=True)
-    company_image = models.CharField(max_length=250, blank=True, 
-        help_text='path to company image, local or otherwise')
+    end_date = models.DateField(blank=True, null=True)
+    summary = models.TextField()
 
     class Meta:
-        db_table = 'jobs'
-        ordering = ['-completion_date','-start_date']
+        ordering = ['-end_date','-start_date']
         
     def job_date_range(self):
         return ''.join(['(', self.formatted_start_date(),'-', 
@@ -152,16 +145,16 @@ class Job(models.Model):
         if (self.is_current == True):
             return time.strftime("%Y-%m-%d", time.localtime())
         else:
-            return self.completion_date.strftime("%Y-%m-%d")
+            return self.end_date.strftime("%Y-%m-%d")
 
     def formatted_start_date(self):
             return self.start_date.strftime("%b %Y")
         
     def formatted_end_date(self):
-        if (self.is_current == True):
+        if not self.end_date:
             return "Current"
         else:
-            return self.completion_date.strftime("%b %Y")
+            return self.end_date.strftime("%b %Y")
 
     def __unicode__(self):
         return ' '.join([self.company, self.job_date_range()])
@@ -169,10 +162,38 @@ class Job(models.Model):
     def __str__(self):
         return self.__unicode__()
 
-class VolunteerJob(Job):
+class Volunteer(models.Model):
+    organization = models.CharField(max_length=250)
+    position = models.CharField(max_length=250)
+    website = models.URLField('Company URL')
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
+    summary = models.TextField()
+
     class Meta:
-        db_table = 'volunteer_jobs'
-        ordering = ['-completion_date','-start_date']
+        ordering = ['-end_date','-start_date']
+        
+    def job_date_range(self):
+        return ''.join(['(', self.formatted_start_date(),'-', 
+            self.formatted_end_date(), ')'])
+    
+    def full_start_date(self):
+        return self.start_date.strftime("%Y-%m-%d")
+
+    def full_end_date(self):
+        if (self.is_current == True):
+            return time.strftime("%Y-%m-%d", time.localtime())
+        else:
+            return self.end_date.strftime("%Y-%m-%d")
+
+    def formatted_start_date(self):
+            return self.start_date.strftime("%b %Y")
+        
+    def formatted_end_date(self):
+        if not self.end_date:
+            return "Current"
+        else:
+            return self.end_date.strftime("%b %Y")
 
     def __unicode__(self):
         return ' '.join([self.company, self.job_date_range()])
@@ -180,14 +201,13 @@ class VolunteerJob(Job):
     def __str__(self):
         return self.__unicode__()
 
-class Accomplishment(SortableMixin):
+class Highlight(SortableMixin):
     description = models.TextField()
     #job = models.ForeignKey(Job)
-    job = SortableForeignKey('Job', on_delete=models.CASCADE)
+    job = SortableForeignKey(Work, on_delete=models.CASCADE)
     order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
     class Meta:
-        db_table = 'accomplishments'
         ordering = ['order']
 
     def __unicode__(self):
@@ -196,14 +216,13 @@ class Accomplishment(SortableMixin):
     def __str__(self):
         return self.__unicode__()
 
-class VolunteerAccomplishment(SortableMixin):
+class VolunteerHighlight(SortableMixin):
     description = models.TextField()
     #job = models.ForeignKey(Job)
-    job = SortableForeignKey('VolunteerJob', on_delete=models.CASCADE)
+    job = SortableForeignKey(Volunteer, on_delete=models.CASCADE)
     order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
     class Meta:
-        db_table = 'volunteer_accomplishments'
         ordering = ['order']
 
     def __unicode__(self):
@@ -227,8 +246,8 @@ class Skillset(SortableMixin):
 
 class Skill(SortableMixin):
     name =  models.CharField(max_length=250)
-    skill_url = models.URLField('Skill URL', blank=True)
-    skill_level = models.CharField(max_length=20, blank=True)
+    url = models.URLField('Skill URL', blank=True)
+    level = models.CharField(max_length=20, blank=True)
     skillset = SortableForeignKey('Skillset', on_delete=models.CASCADE)
     order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
@@ -298,7 +317,7 @@ class InterestKeyword(SortableMixin):
 
 class Reference(SortableMixin):
     name = models.CharField(max_length=250)
-    reference_text = models.TextField()
+    reference = models.TextField()
     order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
     class Meta:

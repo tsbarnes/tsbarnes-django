@@ -2,20 +2,20 @@ from django.contrib import admin
 from singlemodeladmin import SingleModelAdmin
 from adminsortable.admin import SortableAdmin
 
-from .models import Overview, PersonalInfo, SocialAccount, Education, Job, VolunteerJob, Accomplishment, Skillset, Skill
+from .models import Basics, Location, Profile, Education, Work, Volunteer, Highlight, VolunteerHighlight, Skillset, Skill
 
-class AccomplishmentAdmin(SortableAdmin):
+class HighlightAdmin(SortableAdmin):
     list_display = ('job', 'description')
 
 class SkillAdmin(SortableAdmin):
     list_display = ('skillset', 'name')
 
-admin.site.register(Overview, SingleModelAdmin)
-admin.site.register(PersonalInfo, SingleModelAdmin)
-admin.site.register(SocialAccount, SortableAdmin)
+admin.site.register(Basics, SingleModelAdmin)
+admin.site.register(Profile, SortableAdmin)
 admin.site.register(Education)
-admin.site.register(Job)
-admin.site.register(VolunteerJob)
-admin.site.register(Accomplishment, AccomplishmentAdmin)
+admin.site.register(Work)
+admin.site.register(Volunteer)
+admin.site.register(Highlight, HighlightAdmin)
+admin.site.register(VolunteerHighlight, HighlightAdmin)
 admin.site.register(Skillset, SortableAdmin)
 admin.site.register(Skill, SkillAdmin)
