@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.sites.requests import RequestSite
 from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
 
 from .models import Overview, PersonalInfo, SocialAccount, Education, Job, Accomplishment, Skillset, Skill
 
@@ -23,6 +24,7 @@ def index(request):
   })
 
 # TODO: add ability to upload a jsonresume
+@login_required
 def upload(request):
   pass
 
