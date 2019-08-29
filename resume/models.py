@@ -145,7 +145,7 @@ class Work(models.Model):
         return self.start_date.strftime("%Y-%m-%d")
 
     def full_end_date(self):
-        if (self.is_current == True):
+        if not self.end_date:
             return time.strftime("%Y-%m-%d", time.localtime())
         else:
             return self.end_date.strftime("%Y-%m-%d")
