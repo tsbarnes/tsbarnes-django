@@ -1,10 +1,14 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.sites.requests import RequestSite
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
+import json
+from collections import namedtuple
+
 from .models import Basics, Profile, Education, Work, Volunteer, Skillset, Skill
+from .forms import JsonForm
 
 def index(request):
   site_name = RequestSite(request).domain
@@ -28,10 +32,36 @@ def index(request):
 # TODO: add ability to upload a jsonresume
 @login_required
 def upload(request):
-  pass
+  # if this is a POST request we need to process the form data
+  if request.method == 'POST':
+    # create a form instance and populate it with data from the request:
+    form = JsonForm(request.POST)
+    # check whether it's valid:
+    if form.is_valid():
+      # process the data in form.cleaned_data as required
+      rawdata = form.cleaned_data["json"]
+      data = json.loads(rawdata, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
+
+      basics, created = Basics.objects.get_or_create()
+
+      basics.label = data.basics.label
+      basics.email = data.basics.email
+      basics.phone = data.basics.phone
+      basics.summary = data.basics.summary
+
+      basics.save()
+
+      # redirect to a new URL:
+      return HttpResponseRedirect('/resume/')
+
+  # if a GET (or any other method) we'll create a blank form
+  else:
+    form = JsonForm()
+
+  return render(request, 'resume/upload.html', {'form': form})
 
 # TODO: add ability to download resume as json
-def json(request):
+def download(request):
   resume = {
     "basics": {
     }
