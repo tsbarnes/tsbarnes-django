@@ -37,14 +37,38 @@ def json(request):
     }
   }
 
-  personal_info = PersonalInfo.objects.first()
-  resume["basics"]["name"] = personal_info.full_name()
-  resume["basics"]["email"] = personal_info.email
+  basics = Basics.objects.first()
+  resume["basics"]["name"] = basics.name()
+  resume["basics"]["label"] = basics.label
+  resume["basics"]["email"] = basics.email
+  resume["basics"]["phone"] = basics.phone
   resume["basics"]["website"] = RequestSite(request).domain
-  resume["basics"]["summary"] = Overview.objects.first().text
+  resume["basics"]["summary"] = basics.summary
   resume["basics"]["location"] = {
-    "city": personal_info.locality,
-    "region": personal_info.region,
+    "city": basics.location.city,
+    "region": basics.location.region,
   }
+  resume["basics"]["profiles"] = []
+  for profile in Profile.objects.all():
+    resume["basics"]["profiles"].append({
+      "network": profile.network,
+      "username": profile.username,
+      "url": profile.url,
+    })
+  
+  resume["work"] = []
+  for work in Work.objects.all():
+    obj = {
+      "company": work.company,
+      "position": work.position,
+      "website": work.website,
+      "startDate": work.start_date,
+      "endDate": work.end_date,
+      "summary": work.summary,
+      "highlights": [],
+    }
+    for highlight in work.highlight_set.all():
+      obj["highlights"].append(highlight.description)
+    resume["work"].append(obj)
 
   return JsonResponse(resume)
