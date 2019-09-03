@@ -73,7 +73,7 @@ class Profile(SortableMixin):
 class Education(models.Model):
     institution = models.CharField(max_length=250)
     area = models.CharField(max_length=250)
-    school_url = models.URLField('School URL')
+    school_url = models.URLField('School URL', blank=True, null=True)
     study_type = models.CharField(max_length=100, null=True, blank=True)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
@@ -91,7 +91,7 @@ class Education(models.Model):
         return self.start_date.strftime("%Y-%m-%d")
 
     def full_end_date(self):
-        if (self.is_current == True):
+        if not self.end_date:
             return time.strftime("%Y-%m-%d", time.localtime())
         else:
             return self.end_date.strftime("%Y-%m-%d")
@@ -128,7 +128,7 @@ class Course(SortableMixin):
 class Work(models.Model):
     company = models.CharField(max_length=250)
     position = models.CharField(max_length=250)
-    website = models.URLField('Company URL')
+    website = models.URLField('Company URL', blank=True, null=True)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
     summary = models.TextField()
@@ -236,8 +236,10 @@ class VolunteerHighlight(SortableMixin):
     def __str__(self):
         return self.__unicode__()
 
-class Skillset(SortableMixin):
-    name = models.CharField(max_length=250)
+class Skill(SortableMixin):
+    name =  models.CharField(max_length=250)
+    url = models.URLField('Skill URL', blank=True)
+    level = models.CharField(max_length=20, blank=True)
     order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
 
     class Meta:
@@ -245,22 +247,6 @@ class Skillset(SortableMixin):
 
     def __unicode__(self):
         return self.name
-    
-    def __str__(self):
-        return self.__unicode__()
-
-class Skill(SortableMixin):
-    name =  models.CharField(max_length=250)
-    url = models.URLField('Skill URL', blank=True)
-    level = models.CharField(max_length=20, blank=True)
-    skillset = SortableForeignKey('Skillset', on_delete=models.CASCADE)
-    order = models.PositiveIntegerField(default=0, editable=False, db_index=True)
-
-    class Meta:
-        ordering = ['order']
-
-    def __unicode__(self):
-        return ''.join([self.skillset.name, '-', self.name])
     
     def __str__(self):
         return self.__unicode__()
@@ -274,7 +260,7 @@ class SkillKeyword(SortableMixin):
         ordering = ['order']
 
     def __unicode__(self):
-        return ''.join([self.skillset.name, '-', self.name])
+        return ''.join([self.skill.name, ' - ', self.name])
     
     def __str__(self):
         return self.__unicode__()
