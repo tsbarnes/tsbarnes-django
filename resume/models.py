@@ -92,7 +92,7 @@ class Education(models.Model):
 
     def full_end_date(self):
         if not self.end_date:
-            return time.strftime("%Y-%m-%d", time.localtime())
+            return None
         else:
             return self.end_date.strftime("%Y-%m-%d")
 
@@ -106,7 +106,7 @@ class Education(models.Model):
             return self.end_date.strftime("%b %Y")
 
     def __unicode__(self):
-        return ' '.join([self.name, self.edu_date_range()])
+        return ' '.join([self.institution, self.edu_date_range()])
     
     def __str__(self):
         return self.__unicode__()
@@ -146,7 +146,7 @@ class Work(models.Model):
 
     def full_end_date(self):
         if not self.end_date:
-            return time.strftime("%Y-%m-%d", time.localtime())
+            return None
         else:
             return self.end_date.strftime("%Y-%m-%d")
 
@@ -186,8 +186,8 @@ class Volunteer(models.Model):
         return self.start_date.strftime("%Y-%m-%d")
 
     def full_end_date(self):
-        if (self.is_current == True):
-            return time.strftime("%Y-%m-%d", time.localtime())
+        if not self.end_date:
+            return None
         else:
             return self.end_date.strftime("%Y-%m-%d")
 

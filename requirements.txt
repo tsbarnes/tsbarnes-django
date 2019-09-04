@@ -7,3 +7,4 @@ Pillow == 6.1.0
 feedparser == 5.2.1
 django-admin-sortable == 2.1.17
 django-admin-tools == 0.8.1
+jsonschema == 3.0.2

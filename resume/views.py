@@ -3,8 +3,10 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.sites.requests import RequestSite
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.contrib.staticfiles.finders import find
 
 import json
+from jsonschema import validate
 from collections import namedtuple
 
 from .models import Basics, Profile, Education, Course, Work, Volunteer, Skill, SkillKeyword, Location, Highlight, Interest, InterestKeyword, Language, Reference
@@ -29,6 +31,11 @@ def index(request):
     'skill_sets' : skill_sets,
   })
 
+def jsonvalidate(data):
+  with open(find("schema.json"), "r") as read_file:
+    schema = json.load(read_file)
+  validate(schema=schema, instance=data)
+
 # TODO: add ability to upload a jsonresume
 @login_required
 def upload(request):
@@ -41,6 +48,8 @@ def upload(request):
       # process the data in form.cleaned_data as required
       rawdata = form.cleaned_data["json"]
       data = json.loads(rawdata, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
+
+      jsonvalidate(data)
 
       basics, created = Basics.objects.get_or_create()
 
@@ -270,11 +279,14 @@ def download(request):
       "institution": education.institution,
       "area": education.area,
       "studyType": education.study_type,
-      "startDate": education.start_date,
-      "endDate": education.end_date,
-      "gpa": education.gpa,
+      "startDate": education.full_start_date(),
       "courses": []
     }
+    if education.gpa:
+      obj["gpa"] = education.gpa
+    if education.full_end_date():
+      obj["endDate"] = education.full_end_date()
+
     for course in education.course_set.all():
       obj["courses"].append(course.name)
     resume["education"].append(obj)
@@ -285,11 +297,12 @@ def download(request):
       "company": work.company,
       "position": work.position,
       "website": work.website,
-      "startDate": work.start_date,
-      "endDate": work.end_date,
+      "startDate": work.full_start_date(),
       "summary": work.summary,
       "highlights": [],
     }
+    if work.full_end_date():
+      obj["endDate"] = work.full_end_date()
     for highlight in work.highlight_set.all():
       obj["highlights"].append(highlight.description)
     resume["work"].append(obj)
@@ -300,11 +313,12 @@ def download(request):
       "organization": work.organization,
       "position": work.position,
       "website": work.website,
-      "startDate": work.start_date,
-      "endDate": work.end_date,
+      "startDate": work.full_start_date(),
       "summary": work.summary,
       "highlights": [],
     }
+    if work.full_end_date():
+      obj["endDate"] = work.full_end_date()
     for highlight in work.highlight_set.all():
       obj["highlights"].append(highlight.description)
     resume["volunteer"].append(obj)
@@ -345,5 +359,7 @@ def download(request):
     for keyword in interest.interestkeyword_set.all():
       obj["keywords"].append(keyword.name)
     resume["interests"].append(obj)
+
+  jsonvalidate(resume)
 
   return JsonResponse(resume)
