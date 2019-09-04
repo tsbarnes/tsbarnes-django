@@ -7,7 +7,9 @@
     <div class="card-body">
       <h1 class="fn n card-title" id="name"><a class="url" href="{% if request.is_secure %}https{% else %}http{% endif %}://{{ site_name }}{% url 'resume_home' %}" rel="me"><span class="given-name">{{ basics.first_name}}</span> <span class="family-name">{{ basics.last_name }}</span></a></h1> 
       <div class="adr">
-        <span class="locality">{{ basics.location.city }}</span>, <abbr class="region" title="{{ basics.location.region }}">{{ basics.location.region_shorthand }}</abbr> 
+        <span class="locality">{{ basics.location.city }}</span>, <abbr class="region" title="{{ basics.location.region }}">
+          {% if basics.location.region_shorthand %}{{ basics.location.region_shorthand }}{% else %}{{ basics.location.region }}{% endif %}
+        </abbr> 
       </div>
       
       {% if basics.email %}
@@ -68,7 +70,7 @@
             
             <div class="description">{{ job.description }}</div>
             <ul class="achievements">
-              {% for a in job.accomplishment_set.all %}
+              {% for a in job.volunteerhighlight_set.all %}
                 <li>{{ a.description }}</li>
               {% endfor %}
             </ul>

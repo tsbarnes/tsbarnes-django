@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 import json
 from collections import namedtuple
 
-from .models import Basics, Profile, Education, Course, Work, Volunteer, Skill, SkillKeyword, Location, Highlight
+from .models import Basics, Profile, Education, Course, Work, Volunteer, Skill, SkillKeyword, Location, Highlight, Interest, InterestKeyword, Language, Reference
 from .forms import JsonForm
 
 def index(request):
@@ -194,6 +194,37 @@ def upload(request):
           )
           course.save()
 
+      for interest in Interest.objects.all():
+        interest.delete()
+      for int_data in data.interests:
+        interest = Interest.objects.create(
+          name=int_data.name
+        )
+        interest.save()
+        for keyword_data in int_data.keywords:
+          keyword = InterestKeyword.objects.create(
+            name=keyword_data,
+            interest=interest
+          )
+          keyword.save()
+
+      for language in Language.objects.all():
+        language.delete()
+      for lang_data in data.languages:
+        language = Language.objects.create(
+          name=lang_data.language,
+          fluency=lang_data.fluency
+        )
+        language.save()
+
+      for reference in Reference.objects.all():
+        reference.delete()
+      for ref_data in data.references:
+        reference = Reference.objects.create(
+          name=ref_data.name,
+          reference=ref_data.reference
+        )
+        reference.save()
 
       # redirect to a new URL:
       return HttpResponseRedirect('/resume/')
@@ -232,7 +263,22 @@ def download(request):
       "username": profile.username,
       "url": profile.url,
     })
-  
+
+  resume["education"] = []
+  for education in Education.objects.all():
+    obj = {
+      "institution": education.institution,
+      "area": education.area,
+      "studyType": education.study_type,
+      "startDate": education.start_date,
+      "endDate": education.end_date,
+      "gpa": education.gpa,
+      "courses": []
+    }
+    for course in education.course_set.all():
+      obj["courses"].append(course.name)
+    resume["education"].append(obj)
+
   resume["work"] = []
   for work in Work.objects.all():
     obj = {
@@ -247,5 +293,57 @@ def download(request):
     for highlight in work.highlight_set.all():
       obj["highlights"].append(highlight.description)
     resume["work"].append(obj)
+
+  resume["volunteer"] = []
+  for work in Volunteer.objects.all():
+    obj = {
+      "organization": work.organization,
+      "position": work.position,
+      "website": work.website,
+      "startDate": work.start_date,
+      "endDate": work.end_date,
+      "summary": work.summary,
+      "highlights": [],
+    }
+    for highlight in work.highlight_set.all():
+      obj["highlights"].append(highlight.description)
+    resume["volunteer"].append(obj)
+
+  resume["languages"] = []
+  for language in Language.objects.all():
+    obj = {
+      "language": language.name,
+      "fluency": language.fluency,
+    }
+    resume["languages"].append(obj)
+
+  resume["skills"] = []
+  for skill in Skill.objects.all():
+    obj = {
+      "name": skill.name,
+      "level": skill.level,
+      "keywords": []
+    }
+    for keyword in skill.skillkeyword_set.all():
+      obj["keywords"].append(keyword.name)
+    resume["skills"].append(obj)
+
+  resume["references"] = []
+  for reference in Reference.objects.all():
+    obj = {
+      "name": reference.name,
+      "reference": reference.reference,
+    }
+    resume["references"].append(obj)
+
+  resume["interests"] = []
+  for interest in Interest.objects.all():
+    obj = {
+      "name": interest.name,
+      "keywords": []
+    }
+    for keyword in interest.interestkeyword_set.all():
+      obj["keywords"].append(keyword.name)
+    resume["interests"].append(obj)
 
   return JsonResponse(resume)
