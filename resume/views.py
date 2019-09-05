@@ -9,7 +9,7 @@ import json
 from jsonschema import validate
 from collections import namedtuple
 
-from .models import Basics, Profile, Education, Course, Work, Volunteer, Skill, SkillKeyword, Location, Highlight, Interest, InterestKeyword, Language, Reference
+from .models import Basics, Profile, Education, Course, Work, Volunteer, Skill, SkillKeyword, Location, Highlight, VolunteerHighlight, Interest, InterestKeyword, Language, Reference
 from .forms import JsonForm
 
 def index(request):
@@ -47,9 +47,9 @@ def upload(request):
     if form.is_valid():
       # process the data in form.cleaned_data as required
       rawdata = form.cleaned_data["json"]
-      data = json.loads(rawdata, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
-
+      data = json.loads(rawdata)
       jsonvalidate(data)
+      data = json.loads(rawdata, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
 
       basics, created = Basics.objects.get_or_create()
 
@@ -102,9 +102,11 @@ def upload(request):
       for work in data.work:
         try:
           endDate = work.endDate
-          website = work.website
         except:
           endDate = None
+        try:
+          website = work.website
+        except:
           website = None
         w = Work.objects.create(
           summary=work.summary,
@@ -130,11 +132,13 @@ def upload(request):
       for work in data.volunteer:
         try:
           endDate = work.endDate
-          website = work.website
         except:
           endDate = None
+        try:
+          website = work.website
+        except:
           website = None
-        w = Work.objects.create(
+        w = Volunteer.objects.create(
           summary=work.summary,
           start_date=work.startDate,
           end_date=endDate,
@@ -284,7 +288,7 @@ def download(request):
     }
     if education.gpa:
       obj["gpa"] = education.gpa
-    if education.full_end_date():
+    if education.end_date != None:
       obj["endDate"] = education.full_end_date()
 
     for course in education.course_set.all():
@@ -301,7 +305,7 @@ def download(request):
       "summary": work.summary,
       "highlights": [],
     }
-    if work.full_end_date():
+    if work.end_date != None:
       obj["endDate"] = work.full_end_date()
     for highlight in work.highlight_set.all():
       obj["highlights"].append(highlight.description)
@@ -317,7 +321,7 @@ def download(request):
       "summary": work.summary,
       "highlights": [],
     }
-    if work.full_end_date():
+    if work.end_date:
       obj["endDate"] = work.full_end_date()
     for highlight in work.highlight_set.all():
       obj["highlights"].append(highlight.description)

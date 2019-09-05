@@ -135,7 +135,7 @@ class Work(models.Model):
 
     class Meta:
         verbose_name_plural = "Work"
-        ordering = ['-end_date','-start_date']
+        ordering = ['-start_date','-end_date']
         
     def job_date_range(self):
         return ''.join(['(', self.formatted_start_date(),'-', 
@@ -176,7 +176,7 @@ class Volunteer(models.Model):
     class Meta:
         verbose_name = "Volunteer Work"
         verbose_name_plural = "Volunteer Work"
-        ordering = ['-end_date','-start_date']
+        ordering = ['-start_date','-end_date']
         
     def job_date_range(self):
         return ''.join(['(', self.formatted_start_date(),'-', 
@@ -201,7 +201,7 @@ class Volunteer(models.Model):
             return self.end_date.strftime("%b %Y")
 
     def __unicode__(self):
-        return ' '.join([self.company, self.job_date_range()])
+        return ' '.join([self.organization, self.job_date_range()])
     
     def __str__(self):
         return self.__unicode__()
