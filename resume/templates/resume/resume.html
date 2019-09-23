@@ -23,7 +23,7 @@
     </div>
     <div class="card-footer bg-light" role="group" aria-label="Social media links"><div class="row">
       {% for profile in profiles %}
-        <a href="{{ profile.url }}" class="btn btn-primary col socicon-{{ profile.icon_name }}" title="{{ profile }}"></a>
+        <a href="{{ profile.url }}" class="btn col-sm-3 socicon-{{ profile.icon_name }}" title="{{ profile }}"></a>
       {% endfor %}
     </div></div>
   </div>

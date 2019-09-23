@@ -18,11 +18,11 @@
           {{ basics.summary }}
         </p>
       </div>
-      <div class="btn-group" role="group" aria-label="Social media links">
-        {% for social in profiles %}
-          <a href="{{ social.url }}" class="btn btn-primary socicon-{{ social.icon_name }}" title="{{ social }}"></a>
+      <div class="card-footer bg-light" role="group" aria-label="Social media links"><div class="row">
+        {% for profile in profiles %}
+          <a href="{{ profile.url }}" class="btn col-sm-3 socicon-{{ profile.icon_name }}" title="{{ profile }}"></a>
         {% endfor %}
-      </div>
+      </div></div>
     </div>
     <div class="card col-md-8 flex-grow-1">
       <h1 class="card-header">Articles</h1>
