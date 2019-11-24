@@ -1,6 +1,26 @@
-@import "bootstrap";
 @import "socicon";
 
 body {
   background-image: url('/static/img/clouds.gif');
+}
+
+.card {
+  border: #000000 solid 1px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col-md-4 {
+  width: 33%;
+}
+
+.col-md-8 {
+  width: 66%;
+}
+
+.card-img, .card-img-top {
+  width: 100%;
 }
