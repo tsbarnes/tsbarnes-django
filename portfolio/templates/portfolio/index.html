@@ -7,18 +7,13 @@
     <div class="card-body">
       <div class="row">
         {% for project in object_list %}
-          <div class="col-md-4">
-              <div class="card mb-2">
-                  <img class="card-img-top" src="{{ project.header_image.url }}">
-                  <div class="card-body">
-                      <h5 class="card-title">{{ project.title }}</h5>
-                      <p class="card-text">{{ project.short|safe }}</p>
-                      <a href="{% url 'detail' project.slug %}"
-                        class="btn btn-primary">
-                          Read More
-                      </a>
-                  </div>
-              </div>
+          <div class="col-md-4 card">
+            <img class="card-img-top" src="{{ project.header_image.url }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ project.title }}</h5>
+                <p class="card-text">{{ project.short|safe }}</p>
+            </div>
+            <a href="{% url 'detail' project.slug %}" class="btn btn-primary">Read More</a>
           </div>
         {% endfor %}
       </div>
