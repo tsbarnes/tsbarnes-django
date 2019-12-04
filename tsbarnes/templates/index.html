@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="row no-gutters mt-2">
-    <div class="card col-md-4 flex-grow-1">
+  <div class="row">
+    <div class="card col-4">
       {% if basics.picture %}
         <img class="card-img" src="{{ basics.picture.url }}">
       {% endif %}
@@ -18,18 +18,18 @@
           {{ basics.summary }}
         </p>
       </div>
-      <div class="card-footer bg-light" role="group" aria-label="Social media links"><div class="row">
+      <div class="card-footer" role="group" aria-label="Social media links">
         {% for profile in profiles %}
-          <a href="{{ profile.url }}" class="btn col-sm-3 socicon-{{ profile.icon_name }}" title="{{ profile }}"></a>
+          <a href="{{ profile.url }}" class="btn socicon-{{ profile.icon_name }}" title="{{ profile }}"></a>
         {% endfor %}
-      </div></div>
+      </div>
     </div>
-    <div class="card col-md-8 flex-grow-1">
+    <div class="card col-8">
       <h1 class="card-header">Articles</h1>
       <div class="card-body">
-        <div class="row no-gutters">
+        <div class="row">
           {% for article in articles %}
-            <div class="card col-md-6 flex-grow-1">
+            <div class="card col-6">
               {% if article.header_image %}
                 <img class="card-img" src="{{ article.header_image.url }}">
               {% endif %}
@@ -55,7 +55,7 @@
       <div class="card-body">
         <div class="row no-gutters">
           {% for project in projects %}
-            <div class="card col-md-4 flex-grow-1">
+            <div class="card col-4 flex-grow-1">
                 <img class="card-img-top" src="{{ project.header_image.url }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ project.title }}</h5>
