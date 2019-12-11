@@ -73,8 +73,9 @@ body {
 // Widgets
 
 .card {
-  border: #ffffff outset 3px;
-  background: #eeeeee;
+  border: rgba(255, 255, 255, 0.7) solid 1px;
+  border-radius: 0px 0px 1em 1em;
+  background: rgba(255, 255, 255, 0.7);
   margin: 5px;
   display: flex;
   flex-direction: column;
@@ -86,8 +87,9 @@ body {
   .card-header {
     margin: 0px;
     padding: 5px;
-    color: #ffffff;
-    background: #394DCD;
+    padding-left: 1em;
+    border: rgba(255, 255, 255, 0.7) solid 1px;
+    background: rgba(255, 255, 255, 0.7);
   }
   
   .card-body {
@@ -95,15 +97,15 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    padding: 5px 2em 5px 2em;
 
     .card {
-      border: #ffffff groove 3px;
       padding: 3px;
     }
   }
 
   .card-footer {
-    margin: 5px;
+    margin: 5px 2em 5px 2em;
     display: flex;
     flex-direction: row;
   }
@@ -111,18 +113,21 @@ body {
 
 .btn {
   display: block;
-  border: #ffffff outset 3px;
+  border: rgba(255, 255, 255, 0.7) solid 1px;
+  border-radius: 1em;
+  background: rgba(255, 255, 255, 0.7);
   padding: 5px;
-  background: #eeeeee;
   text-decoration: none;
+  text-align: center;
 }
 
 nav {
   display: flex;
   flex-direction: row;
 
-  border: #ffffff outset 3px;
-  background: #eeeeee;
+  border: rgba(255, 255, 255, 0.7) solid 1px;
+  border-radius: 1em;
+  background: rgba(255, 255, 255, 0.7);
   margin: 5px;
 
   a {

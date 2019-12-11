@@ -21,11 +21,11 @@
       </p>
 
     </div>
-    <div class="card-footer bg-light" role="group" aria-label="Social media links"><div class="row">
+    <div class="card-footer bg-light" role="group" aria-label="Social media links">
       {% for profile in profiles %}
         <a href="{{ profile.url }}" class="btn col-sm-3 socicon-{{ profile.icon_name }}" title="{{ profile }}"></a>
       {% endfor %}
-    </div></div>
+    </div>
   </div>
   <!-- End Personal Contact Information --> 
   
