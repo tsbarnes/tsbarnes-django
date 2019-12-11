@@ -13,6 +13,9 @@ class Article(models.Model):
   updated_at=models.DateTimeField(auto_now=True)
   published = models.BooleanField(default=False)
 
+  class Meta:
+    ordering = ['-date']
+
   def __unicode__(self):
     return self.title
   
