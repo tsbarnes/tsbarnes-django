@@ -1,1 +1,12 @@
-runtime: python37
+runtime: python
+env: flex
+entrypoint: gunicorn -b :$PORT tsbarnes.wsgi
+
+beta_settings:
+  cloud_sql_instances: tsbarnes:us-east4:tsbarnes-data
+
+runtime_config:
+  python_version: 3
+
+env_variables:
+  DJANGO_SETTINGS_MODULE: "tsbarnes.local_settings"

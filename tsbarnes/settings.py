@@ -23,16 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ps6&s9@ittqkjm!rln*2@6_f2$_+n^)*ph-$^-51i$=q$)*9s6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-try:
-  from .local_settings import DEBUG
-except:
-  DEBUG = True
+DEBUG = True
 
 
-try:
-  from .local_settings import ALLOWED_HOSTS
-except:
-  ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -99,15 +93,12 @@ WSGI_APPLICATION = 'tsbarnes.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-try:
-  from .local_settings import DATABASES
-except:
-  DATABASES = {
-    'default': {
-      'ENGINE': 'django.db.backends.sqlite3',
-      'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+DATABASES = {
+  'default': {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
   }
+}
 
 
 # Password validation
@@ -147,6 +138,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -155,38 +147,20 @@ STATICFILES_FINDERS = (
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-try:
-  from .local_settings import STATIC_ROOT
-except:
-  pass
 
 MEDIA_URL = '/media/'
-try:
-  from .local_settings import MEDIA_ROOT
-except:
-  MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 COMPRESS_ENABLED = True
 
-try:
-  from .local_settings import COMPRESS_ROOT
-except:
-  STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-try:
-  from .local_settings import COMPRESS_PRECOMPILERS
-except:
-  COMPRESS_PRECOMPILERS = (
-    ('text/sass', 'sass {infile} {outfile}'),
-    ('text/scss', 'sass {infile} {outfile}'),
-  )
+COMPRESS_PRECOMPILERS = (
+  ('text/sass', 'sass {infile} {outfile}'),
+  ('text/scss', 'sass {infile} {outfile}'),
+)
 
 COMPRESS_CSS_FILTERS = (
   'compressor.filters.css_default.CssAbsoluteFilter',
   'compressor.filters.cssmin.CSSMinFilter',
 )
-
-try:
-  from .local_settings import COMPRESS_OFFLINE
-except:
-  pass
