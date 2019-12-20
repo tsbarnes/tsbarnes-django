@@ -10,3 +10,4 @@ runtime_config:
 
 env_variables:
   DJANGO_SETTINGS_MODULE: "tsbarnes.local_settings"
+  GOOGLE_APPLICATION_CREDENTIALS: "./credentials.json"

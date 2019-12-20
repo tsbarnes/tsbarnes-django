@@ -11,3 +11,4 @@ django-admin-tools == 0.8.1
 jsonschema == 3.0.2
 gunicorn == 20.0.4
 psycopg2 == 2.8.4
+django-storages[google] == 1.8

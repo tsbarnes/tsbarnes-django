@@ -127,3 +127,5 @@ dmypy.json
 .sass-cache
 
 /staticfiles
+
+/credentials.json
