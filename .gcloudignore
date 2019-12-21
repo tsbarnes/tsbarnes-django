@@ -13,7 +13,13 @@
 .git
 .gitignore
 
+.sass-cache/
+.vscode/
+
 # Python pycache:
 __pycache__/
 # Ignored by the build system
 /setup.cfg
+
+/staticfiles
+/media
