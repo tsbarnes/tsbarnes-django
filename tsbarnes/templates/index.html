@@ -42,7 +42,7 @@
                   {{ article.short|safe }}
                 </p>
               </div>
-              <a class="btn btn-primary align-self-bottom" href="/blog/{{ article.slug }}/">Read more...</a>
+              <a class="btn btn-primary align-self-bottom" href="{% url 'blog-detail' article.slug %}">Read more...</a>
             </div>
           {% endfor %}
         </div>
@@ -61,7 +61,7 @@
                     <h5 class="card-title">{{ project.title }}</h5>
                     <p class="card-text">{{ project.short|safe }}</p>
                 </div>
-                <a href="{% url 'detail' project.slug %}" class="btn btn-primary align-self-bottom">Read More</a>
+                <a href="{% url 'portfolio-detail' project.slug %}" class="btn btn-primary align-self-bottom">Read More</a>
             </div>
           {% endfor %}
         </div>
