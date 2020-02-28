@@ -323,7 +323,7 @@ def download(request):
     }
     if work.end_date:
       obj["endDate"] = work.full_end_date()
-    for highlight in work.highlight_set.all():
+    for highlight in work.volunteerhighlight_set.all():
       obj["highlights"].append(highlight.description)
     resume["volunteer"].append(obj)
 
