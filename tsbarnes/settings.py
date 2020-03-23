@@ -49,6 +49,7 @@ INSTALLED_APPS = [
   'portfolio',
   'resume',
   'compressor',
+  'gtm',
 ]
 
 MIDDLEWARE = [

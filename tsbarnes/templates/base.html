@@ -1,5 +1,6 @@
 {% load compress %}
 {% load static %}
+{% load gtm_tags %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,8 +12,10 @@
 		<link rel="stylesheet" type="text/scss" href="{% static 'scss/base.scss' %}">
 	{% endcompress %}
 	{% block site_css %}{% endblock %}
+  {% gtm_head %}
 </head>
 <body>
+  {% gtm_body %}
   <nav>
     <a class="navbar-brand" href="/">Home</a>
     <a class="nav-link" href="/blog/">Blog</a>
