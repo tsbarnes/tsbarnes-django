@@ -3,7 +3,7 @@ django-tinymce == 2.8.0
 django-polymorphic == 2.1.2
 singlemodeladmin == 0.9
 django-compressor == 2.3
-Pillow == 6.2.0
+Pillow == 9.0.1
 feedparser == 5.2.1
 django-admin-sortable == 2.1.17
 django-admin-tools == 0.8.1
