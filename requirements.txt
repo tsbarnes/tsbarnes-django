@@ -1,5 +1,5 @@
 Django == 2.2.13
-django-tinymce == 2.8.0
+django-tinymce == 3.4.0
 django-polymorphic == 2.1.2
 singlemodeladmin == 0.9
 django-compressor == 2.3
